@@ -6,6 +6,7 @@ public class TennisGame1 implements TennisGame {
     private String player1Name;
     private String player2Name;
 
+
     public TennisGame1(String player1Name, String player2Name) {
         this.player1Name = player1Name;
         this.player2Name = player2Name;
@@ -20,57 +21,70 @@ public class TennisGame1 implements TennisGame {
 
     public String getScore() {
         StringBuilder score = new StringBuilder("");
-        int tempScore=0;
-        if (mScore1 == mScore2)
-        {
-            switch (mScore1)
-            {
-                case 0:
-                        score.append("Love-All");
-                    break;
-                case 1:
-                        score.append("Fifteen-All");
-                    break;
-                case 2:
-                        score.append("Thirty-All");
-                    break;
-                default:
-                        score.append("Deuce");
-                    break;
-                
-            }
-        }
+        if (mScore1 == mScore2) return caseDraw(score);
+        return  (mScore1 >=4 || mScore2 >=4) ? someoneIsAbove4(score): playersAreUnder4(score);
 
-        else if (mScore1 >=4 || mScore2 >=4)
+
+    }
+
+    private String playersAreUnder4(StringBuilder score) {
+        score.append(getDescriptionScore(mScore1)+"-"+getDescriptionScore(mScore2));
+        return score.toString();
+
+    }
+
+
+    public String getDescriptionScore(int scorePlayer){
+        String marker="";
+        switch(scorePlayer)
         {
-            int minusResult = mScore1 - mScore2;
-            if (minusResult==1) score.append("Advantage "+ player1Name);
-            else if (minusResult ==-1) score.append("Advantage "+ player2Name);
-            else if (minusResult>=2) score.append("Win for "+player1Name);
-            else score.append("Win for "+player2Name);
+            case 0:
+                marker = "Love";
+                break;
+            case 1:
+                marker = "Fifteen";
+                break;
+            case 2:
+                marker = "Thirty";
+                break;
+            case 3:
+               marker = "Forty";
+                break;
+            default:
+                break;
         }
-        else
+        return marker;
+    }
+
+
+    private String someoneIsAbove4(StringBuilder score) {
+        int minusResult = mScore1 - mScore2;
+
+        if (minusResult==1) score.append("Advantage "+ player1Name);
+        else if (minusResult ==-1) score.append("Advantage "+ player2Name);
+        else if (minusResult>=2) score.append("Win for "+player1Name);
+        else score.append("Win for "+player2Name);
+
+        return score.toString();
+    }
+
+
+    private String caseDraw(StringBuilder score) {
+        switch (mScore1)
         {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = mScore1;
-                else { score.append("-"); tempScore = mScore2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score.append("Love");
-                        break;
-                    case 1:
-                        score.append("Fifteen");
-                        break;
-                    case 2:
-                        score.append("Thirty");
-                        break;
-                    case 3:
-                        score.append("Forty");
-                        break;
-                }
-            }
+            case 0:
+                    score.append("Love-All");
+                break;
+            case 1:
+                    score.append("Fifteen-All");
+                break;
+            case 2:
+                    score.append("Thirty-All");
+                break;
+            default:
+                    score.append("Deuce");
+                break;
+
         }
         return score.toString();
     }
