@@ -2,7 +2,7 @@
 public class TennisGame1 implements TennisGame {
     
     private int mScore1 = 0;
-    private int m_score2 = 0;
+    private int mScore2 = 0;
     private String player1Name;
     private String player2Name;
 
@@ -15,62 +15,63 @@ public class TennisGame1 implements TennisGame {
         if (playerName.equals(player1Name))
             mScore1 += 1;
         else
-            m_score2 += 1;
+            mScore2 += 1;
     }
 
     public String getScore() {
-        String score = "";
+        StringBuilder score = new StringBuilder("");
         int tempScore=0;
-        if (mScore1 ==m_score2)
+        if (mScore1 == mScore2)
         {
             switch (mScore1)
             {
                 case 0:
-                        score = "Love-All";
+                        score.append("Love-All");
                     break;
                 case 1:
-                        score = "Fifteen-All";
+                        score.append("Fifteen-All");
                     break;
                 case 2:
-                        score = "Thirty-All";
+                        score.append("Thirty-All");
                     break;
                 default:
-                        score = "Deuce";
+                        score.append("Deuce");
                     break;
                 
             }
         }
-        else if (mScore1 >=4 || m_score2>=4)
+
+        else if (mScore1 >=4 || mScore2 >=4)
         {
-            int minusResult = mScore1 -m_score2;
-            if (minusResult==1) score ="Advantage "+ player1Name;
-            else if (minusResult ==-1) score ="Advantage "+ player2Name;
-            else if (minusResult>=2) score = "Win for "+player1Name;
-            else score ="Win for "+player2Name;
+            int minusResult = mScore1 - mScore2;
+            if (minusResult==1) score.append("Advantage "+ player1Name);
+            else if (minusResult ==-1) score.append("Advantage "+ player2Name);
+            else if (minusResult>=2) score.append("Win for "+player1Name);
+            else score.append("Win for "+player2Name);
         }
         else
         {
             for (int i=1; i<3; i++)
             {
                 if (i==1) tempScore = mScore1;
-                else { score+="-"; tempScore = m_score2;}
+                else { score.append("-"); tempScore = mScore2;}
                 switch(tempScore)
                 {
                     case 0:
-                        score+="Love";
+                        score.append("Love");
                         break;
                     case 1:
-                        score+="Fifteen";
+                        score.append("Fifteen");
                         break;
                     case 2:
-                        score+="Thirty";
+                        score.append("Thirty");
                         break;
                     case 3:
-                        score+="Forty";
+                        score.append("Forty");
                         break;
                 }
             }
         }
-        return score;
+        return score.toString();
     }
 }
