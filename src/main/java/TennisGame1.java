@@ -22,50 +22,51 @@ public class TennisGame1 implements TennisGame {
     public String getScore() {
         StringBuilder score = new StringBuilder("");
         if (mScore1 == mScore2) return caseDraw(score);
-        return  (mScore1 >=4 || mScore2 >=4) ? someoneIsAbove4(score): playersAreUnder4(score);
+        return  (mScore1 >=4 || mScore2 >=4) ? someoneIsOver4Points(): playersAreUnder4Points(score);
 
 
     }
 
-    private String playersAreUnder4(StringBuilder score) {
+    private String playersAreUnder4Points(StringBuilder score) {
         score.append(getDescriptionScore(mScore1)+"-"+getDescriptionScore(mScore2));
         return score.toString();
 
     }
 
-
     public String getDescriptionScore(int scorePlayer){
-        String marker="";
+        String description = "";
         switch(scorePlayer)
         {
             case 0:
-                marker = "Love";
+                description = "Love";
                 break;
             case 1:
-                marker = "Fifteen";
+                description = "Fifteen";
                 break;
             case 2:
-                marker = "Thirty";
+                description = "Thirty";
                 break;
             case 3:
-               marker = "Forty";
+               description = "Forty";
                 break;
             default:
                 break;
         }
-        return marker;
+        return description;
     }
 
 
-    private String someoneIsAbove4(StringBuilder score) {
+    private String someoneIsOver4Points() {
         int minusResult = mScore1 - mScore2;
 
-        if (minusResult==1) score.append("Advantage "+ player1Name);
-        else if (minusResult ==-1) score.append("Advantage "+ player2Name);
-        else if (minusResult>=2) score.append("Win for "+player1Name);
-        else score.append("Win for "+player2Name);
+        if (minusResult>0) return playerWinning(player1Name, Math.abs(minusResult));
+        return playerWinning(player2Name, Math.abs(minusResult));
 
-        return score.toString();
+    }
+
+    private String playerWinning(String playerName, int minusResult){
+        if (minusResult==1) return "Advantage "+ playerName;
+        else return "Win for "+playerName;
     }
 
 
