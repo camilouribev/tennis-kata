@@ -16,20 +16,35 @@ public class TennisGame2 implements TennisGame
         int diff = pointsPlayer1-pointsPlayer2;
         if (diff == 0) score = getScoreWhenEqualsAndUnder4Points(pointsPlayer1);
 
-        if(conditionDifference(diff)) {
-            score = getScoreWhenDifference(pointsPlayer1, pointsPlayer2);
-        }
+        score = ifDifference(score, diff);
 
+        score = ifAdvantage(score, diff);
+
+        score = ifWin(score, diff);
+
+        return score;
+    }
+
+    private String ifWin(String score, int diff) {
+        if (conditionWin(pointsPlayer1, pointsPlayer2, Math.abs(diff) >= 2))
+        {
+            score = "Win for "+(diff >0? player1Name:player2Name);
+        }
+        return score;
+    }
+
+    private String ifAdvantage(String score, int diff) {
         if (conditionAdvantage(diff))
         {
             score = "Advantage "+(diff>0? player1Name:player2Name);
         }
+        return score;
+    }
 
-        if (conditionWin(pointsPlayer1, pointsPlayer2, Math.abs(diff) >= 2))
-        {
-            score = "Win for "+(diff>0? player1Name:player2Name);
+    private String ifDifference(String score, int diff) {
+        if(conditionDifference(diff)) {
+            score = getScoreWhenDifference(pointsPlayer1, pointsPlayer2);
         }
-
         return score;
     }
 
@@ -56,7 +71,6 @@ public class TennisGame2 implements TennisGame
         return score[index];
     }
 
-    
     public void P1Score(){
         pointsPlayer1++;
     }
