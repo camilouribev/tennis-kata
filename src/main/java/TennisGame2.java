@@ -1,7 +1,7 @@
 public class TennisGame2 implements TennisGame
 {
-    public int pointsPlayer1 = 0;
-    public int pointsPlayer2 = 0;
+    private int pointsPlayer1 = 0;
+    private int pointsPlayer2 = 0;
 
     private String player1Name;
     private String player2Name;
@@ -53,7 +53,7 @@ public class TennisGame2 implements TennisGame
     }
 
     private boolean conditionAdvantage(int diff) {
-        return conditionWin(pointsPlayer2, pointsPlayer1, diff != 0);
+        return conditionWin(pointsPlayer1,pointsPlayer2, diff != 0);
     }
 
     private boolean conditionDifference(int diff) {
@@ -61,28 +61,28 @@ public class TennisGame2 implements TennisGame
     }
 
     private String getScoreWhenDifference(int pointsPlayer1, int pointsPlayer2) {
-        String score[]={"Love","Fifteen","Thirty","Forty"};
+        String[] score={"Love","Fifteen","Thirty","Forty"};
 
         return score[pointsPlayer1]+"-"+score[pointsPlayer2];
     }
 
     private String getScoreWhenEqualsAndUnder4Points(int index) {
-        String score[]={"Love-All","Fifteen-All","Thirty-All","Deuce","Deuce"};
+        String[] score={"Love-All","Fifteen-All","Thirty-All","Deuce","Deuce"};
         return score[index];
     }
 
-    public void P1Score(){
+    public void scorePlayer1(){
         pointsPlayer1++;
     }
     
-    public void P2Score(){
+    public void scorePlayer2(){
         pointsPlayer2++;
     }
 
     public void wonPoint(String player) {
-        if (player == player1Name)
-            P1Score();
+        if (player.equals(player1Name) )
+            scorePlayer1();
         else
-            P2Score();
+            scorePlayer2();
     }
 }
